@@ -22,7 +22,7 @@ class ClassicalGenerator(nn.Module):
         self.net = nn.Sequential(
             nn.Linear(latent_dim, hidden), nn.LeakyReLU(0.2),
             nn.Linear(hidden, hidden),     nn.LeakyReLU(0.2),
-            nn.Linear(hidden, window),     #nn.Tanh(),
+            nn.Linear(hidden, window),     nn.Tanh(),
         )
 
     def forward(self, z: torch.Tensor) -> torch.Tensor:
