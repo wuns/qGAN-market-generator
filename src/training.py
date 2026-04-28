@@ -220,27 +220,48 @@ def build_experiment(
     n_assets:   int = 1,
     generator_cls,
     adversary_cls,        # Discriminator or Critic — same architecture in this project
+    generator_kwargs: dict | None = None,
     **model_kwargs,
 ) -> Experiment:
     """Construct G, adversary, and the right training function for the chosen variant.
 
-    Usage in the notebook:
+    `generator_kwargs` lets the caller pass kwargs specific to a generator class
+    (e.g., n_qubits and n_layers for QuantumGenerator). For the classical generator,
+    leave it None and latent_dim/window/n_assets will be passed positionally.
 
-        from src.training import build_experiment
+    Usage:
+
+        # Classical:
         exp = build_experiment(
             variant=MODEL_VARIANT,
             latent_dim=LATENT_DIM, window=WINDOW, n_assets=N_ASSETS,
             generator_cls=ClassicalGenerator,
             adversary_cls=Discriminator,
         )
-        history = exp.train_fn(exp.generator, exp.adversary, loader,
-                               latent_dim=LATENT_DIM, epochs=EPOCHS, device=device)
+
+        # Quantum:
+        exp = build_experiment(
+            variant=MODEL_VARIANT,
+            latent_dim=N_QUBITS, window=WINDOW, n_assets=N_ASSETS,
+            generator_cls=QuantumGenerator,
+            adversary_cls=Discriminator,
+            generator_kwargs={'n_qubits': N_QUBITS, 'n_layers': N_LAYERS},
+        )
     """
     if variant not in ("gan", "wgan_gp"):
         raise ValueError(f"Unknown variant: {variant!r}. Choose 'gan' or 'wgan_gp'.")
 
-    G = generator_cls(latent_dim=latent_dim, window=window, n_assets=n_assets,
-                      **model_kwargs.get("G_kwargs", {}))
+    if generator_kwargs is None:
+        # Classical generator: pass latent_dim, window, n_assets directly.
+        G = generator_cls(latent_dim=latent_dim, window=window, n_assets=n_assets,
+                          **model_kwargs.get("G_kwargs", {}))
+    else:
+        # Quantum (or any custom) generator: caller supplies all kwargs explicitly.
+        # latent_dim / window / n_assets only added if not already in generator_kwargs.
+        gk = dict(generator_kwargs)
+        gk.setdefault("window", window)
+        gk.setdefault("n_assets", n_assets)
+        G = generator_cls(**gk)
     A = adversary_cls(window=window, n_assets=n_assets,
                       **model_kwargs.get("A_kwargs", {}))
 
