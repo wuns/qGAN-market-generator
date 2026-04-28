@@ -1,0 +1,8 @@
+numpy>=1.24,<2.0
+pandas>=2.0
+matplotlib>=3.7
+scipy>=1.11
+torch>=2.1
+yfinance>=0.2.40
+pennylane>=0.35
+jupyter
