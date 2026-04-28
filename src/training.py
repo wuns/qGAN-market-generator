@@ -217,20 +217,21 @@ def build_experiment(
     *,
     latent_dim: int,
     window:     int,
+    n_assets:   int = 1,
     generator_cls,
-    adversary_cls,        # used by both variants — Discriminator and Critic share architecture here
+    adversary_cls,        # Discriminator or Critic — same architecture in this project
     **model_kwargs,
 ) -> Experiment:
     """Construct G, adversary, and the right training function for the chosen variant.
 
     Usage in the notebook:
 
-        from src.training import build_experiment, train_gan, train_wgan_gp
+        from src.training import build_experiment
         exp = build_experiment(
             variant=MODEL_VARIANT,
-            latent_dim=LATENT_DIM, window=WINDOW,
+            latent_dim=LATENT_DIM, window=WINDOW, n_assets=N_ASSETS,
             generator_cls=ClassicalGenerator,
-            adversary_cls=Discriminator,   # or Critic — both work, same architecture
+            adversary_cls=Discriminator,
         )
         history = exp.train_fn(exp.generator, exp.adversary, loader,
                                latent_dim=LATENT_DIM, epochs=EPOCHS, device=device)
@@ -238,8 +239,10 @@ def build_experiment(
     if variant not in ("gan", "wgan_gp"):
         raise ValueError(f"Unknown variant: {variant!r}. Choose 'gan' or 'wgan_gp'.")
 
-    G = generator_cls(latent_dim=latent_dim, window=window, **model_kwargs.get("G_kwargs", {}))
-    A = adversary_cls(window=window, **model_kwargs.get("A_kwargs", {}))
+    G = generator_cls(latent_dim=latent_dim, window=window, n_assets=n_assets,
+                      **model_kwargs.get("G_kwargs", {}))
+    A = adversary_cls(window=window, n_assets=n_assets,
+                      **model_kwargs.get("A_kwargs", {}))
 
     if variant == "gan":
         return Experiment(G, A, train_fn=train_gan, label="vanilla GAN",

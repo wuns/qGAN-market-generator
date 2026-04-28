@@ -1,7 +1,9 @@
-"""Model architectures for the classical GAN baseline.
+"""Model architectures.
 
-The discriminator here will be reused unchanged in the quantum GAN notebook,
-so that the only difference between the two experiments is the generator.
+The generator outputs a flat vector of size `window * n_assets`; the data layer
+reshapes to (window, n_assets) for evaluation. The discriminator/critic operates
+on the same flat vector — so the training loop is identical for univariate and
+multivariate cases.
 """
 from __future__ import annotations
 
@@ -10,19 +12,22 @@ import torch.nn as nn
 
 
 class ClassicalGenerator(nn.Module):
-    """Tiny MLP generator: latent vector -> log-return window (in tanh range).
+    """Tiny MLP generator: latent vector -> flattened return window.
 
-    Kept deliberately small so the comparison against a small quantum generator is fair.
+    Output shape: (batch, window * n_assets), in tanh range.
     """
 
-    def __init__(self, latent_dim: int = 8, window: int = 20, hidden: int = 32):
+    def __init__(self, latent_dim: int = 8, window: int = 20,
+                 n_assets: int = 1, hidden: int = 32):
         super().__init__()
         self.latent_dim = latent_dim
         self.window     = window
+        self.n_assets   = n_assets
+        self.out_dim    = window * n_assets
         self.net = nn.Sequential(
             nn.Linear(latent_dim, hidden), nn.LeakyReLU(0.2),
             nn.Linear(hidden, hidden),     nn.LeakyReLU(0.2),
-            nn.Linear(hidden, window),     nn.Tanh(),
+            nn.Linear(hidden, self.out_dim), nn.Tanh(),
         )
 
     def forward(self, z: torch.Tensor) -> torch.Tensor:
@@ -32,13 +37,14 @@ class ClassicalGenerator(nn.Module):
 class Discriminator(nn.Module):
     """MLP discriminator returning logits (use BCEWithLogitsLoss).
 
-    Reused identically by both classical and quantum experiments — that's the point.
+    Operates on flat windows of size window * n_assets.
     """
 
-    def __init__(self, window: int = 20, hidden: int = 64):
+    def __init__(self, window: int = 20, n_assets: int = 1, hidden: int = 64):
         super().__init__()
+        in_dim = window * n_assets
         self.net = nn.Sequential(
-            nn.Linear(window, hidden), nn.LeakyReLU(0.2),
+            nn.Linear(in_dim, hidden), nn.LeakyReLU(0.2),
             nn.Linear(hidden, hidden // 2), nn.LeakyReLU(0.2),
             nn.Linear(hidden // 2, 1),
         )
@@ -49,16 +55,17 @@ class Discriminator(nn.Module):
 
 class Critic(nn.Module):
     """WGAN critic. Same architecture as Discriminator (intentional, for fair
-    comparison), but used with Wasserstein loss + gradient penalty rather than BCE.
+    comparison), but used with Wasserstein loss + gradient penalty.
 
-    No batch norm anywhere — would conflict with the per-sample gradients required
+    No batch norm anywhere — would conflict with per-sample gradients required
     by the gradient penalty.
     """
 
-    def __init__(self, window: int = 20, hidden: int = 64):
+    def __init__(self, window: int = 20, n_assets: int = 1, hidden: int = 64):
         super().__init__()
+        in_dim = window * n_assets
         self.net = nn.Sequential(
-            nn.Linear(window, hidden), nn.LeakyReLU(0.2),
+            nn.Linear(in_dim, hidden), nn.LeakyReLU(0.2),
             nn.Linear(hidden, hidden // 2), nn.LeakyReLU(0.2),
             nn.Linear(hidden // 2, 1),
         )
