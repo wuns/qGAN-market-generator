@@ -29,8 +29,12 @@ from .evaluation     import build_report
 class ExperimentConfig:
     """All knobs needed to reproduce a single run.
 
-    The `tag` (folder name) is computed from these fields so the same config
-    always lands in the same folder — useful for caching.
+    The `folder_name()` is computed from these fields so the same config always
+    lands in the same folder — useful for caching.
+
+    For backwards compatibility with existing folders, the classical folder name
+    only includes hidden/latent_dim suffixes when they DIFFER from defaults.
+    Defaults: latent_dim=8, hidden=32 (these match the original notebook 01 setup).
     """
     family:        str             # 'classical' or 'quantum'
     variant:       str             # 'gan' or 'wgan_gp'
@@ -40,6 +44,8 @@ class ExperimentConfig:
     epochs:        int    = 80
     batch_size:    int    = 64
     latent_dim:    int    = 8       # used for classical only; quantum forces latent = n_qubits
+    # Classical-only architecture knob:
+    hidden:        int    = 32      # hidden width of classical generator MLP
     # Quantum-only:
     n_qubits:      int    = 6
     n_layers:      int    = 3
@@ -49,7 +55,11 @@ class ExperimentConfig:
 
     def folder_name(self) -> str:
         if self.family == 'classical':
-            return f'classical_{self.variant}_{self.asset_tag()}'
+            # Only add suffix when off-default, so existing cached runs are preserved.
+            suffix = ''
+            if self.hidden != 32 or self.latent_dim != 8:
+                suffix = f'_h{self.hidden}d{self.latent_dim}'
+            return f'classical_{self.variant}_{self.asset_tag()}{suffix}'
         elif self.family == 'quantum':
             return f'quantum_{self.variant}_{self.asset_tag()}_q{self.n_qubits}L{self.n_layers}'
         else:
@@ -103,9 +113,10 @@ def run_experiment(
             n_assets=data.n_assets,
             generator_cls=ClassicalGenerator,
             adversary_cls=adversary_cls,
+            G_kwargs={'hidden': cfg.hidden},
         )
         n_params_G = count_parameters(exp.generator)
-        extras_pq  = {}
+        extras_pq  = {'hidden': cfg.hidden}
     else:  # quantum
         latent_dim = cfg.n_qubits
         exp = build_experiment(
