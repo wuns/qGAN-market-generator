@@ -6,7 +6,7 @@ Continuing Education course on Quantum Computing (Spring 2026).
 ## Question
 
 Can a hybrid quantum-classical GAN, where only the generator is replaced by a small
-variational quantum circuit, produce synthetic Swiss Market Index (SMI) log-return windows
+variational quantum circuit, produce synthetic joint return time series
 that match the statistical properties of real returns at least as well as a comparable
 classical GAN baseline?
 
