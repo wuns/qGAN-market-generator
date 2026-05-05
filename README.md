@@ -1,6 +1,6 @@
 # qGAN Market Generator
 
-Hybrid quantum GAN for synthetic financial time series — final project for the ZHAW SoE
+Hybrid quantum GAN for synthetic financial time series - final project for the ZHAW SoE
 Continuing Education course on Quantum Computing (Spring 2026).
 
 ## Question
