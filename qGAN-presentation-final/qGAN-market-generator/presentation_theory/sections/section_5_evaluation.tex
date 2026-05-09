@@ -1,0 +1,74 @@
+% !TEX root = ../main.tex
+
+\section{Evaluation Methodology}
+\label{sec:evaluation}
+\frame[plain]{\sectionpage}
+
+%----------------------------------------
+\begin{frame}{What we measure}
+    Generator output: a $W \times n_a$ array of log-returns.
+    Three families of metrics:
+    \medskip
+
+    \textbf{1.\ Marginal statistics} (per asset)
+    \begin{itemize}
+        \item Mean, std, skewness, excess kurtosis
+        \item Two-sample Kolmogorov-Smirnov distance
+    \end{itemize}
+    \medskip
+
+    \textbf{2.\ Joint dependence} ($n_a \geq 2$)
+    \begin{itemize}
+        \item Pearson correlation matrix
+        \item Frobenius distance on correlation matrices
+    \end{itemize}
+    \medskip
+
+    \textbf{3.\ Computational cost}
+    \begin{itemize}
+        \item Trainable parameter count (quantum vs classical
+        breakdown)
+        \item Wall-clock training time
+    \end{itemize}
+\end{frame}
+
+%----------------------------------------
+\begin{frame}{Experimental design}
+    \begin{columns}[T]
+    \begin{column}{.48\textwidth}
+        \textbf{Data}
+        \begin{itemize}
+            \item Daily closes 2005--2024 (Yahoo Finance)
+            \item Log-returns, scaled to $\sim[-1,1]$ per asset
+            \item Windows of 20 trading days (rolling, stride 1)
+            \item Chronological 80/20 train/test split
+        \end{itemize}
+        \medskip
+
+        \textbf{Configurations}
+        \begin{itemize}
+            \item Multivariate, 5 assets:\\
+            \smi, \dax, EuroStoxx, FTSE, \sap
+            \item Vanilla GAN training
+            \item Quantum: $n_q \in \{6,8,10,12\}$,
+            $L=3$ layers
+        \end{itemize}
+    \end{column}
+    \hfill
+    \begin{column}{.48\textwidth}
+        \textbf{Controlled comparison}\\
+        Identical across all runs:
+        \begin{itemize}
+            \item Discriminator architecture
+            \item Loss function, optimiser, hyperparameters
+            \item Seed, evaluation pipeline, data
+        \end{itemize}
+        \medskip
+
+        Only the generator differs; any observed difference is
+        attributable to the generator architecture --- and within
+        the quantum case, to the entanglement that creates joint
+        feature structure before the classical head.
+    \end{column}
+    \end{columns}
+\end{frame}

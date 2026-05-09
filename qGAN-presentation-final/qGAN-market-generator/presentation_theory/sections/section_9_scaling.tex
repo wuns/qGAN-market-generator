@@ -1,0 +1,31 @@
+% !TEX root = ../main.tex
+
+\section{Qubit Scaling}
+\label{sec:scaling}
+\frame[plain]{\sectionpage}
+
+%----------------------------------------
+\begin{frame}{Qubit-count scaling: an empirical barren-plateau signature}
+    Multivariate vanilla GAN, 5 assets, $n_q \in \{6,8,10,12\}$:
+    \medskip
+
+    \begin{center}
+    \includegraphics[width=0.95\textwidth]{qubit_scaling}
+    \end{center}
+    \medskip
+
+    \textbf{Three observations:}
+    \begin{itemize}
+        \item KS \emph{improves} from $n_q\!=\!6$ to $n_q\!=\!10$,
+        then \emph{degrades} at $n_q\!=\!12$
+        ($0.063 \!\to\! 0.085$)
+        \item Tail kurtosis improves with $n_q$ but plateaus
+        below the real target ($\sim\!1.5$ vs.\ $\sim\!3.1$)
+        \item Training cost grows roughly exponentially:
+        $\sim\!14\!\times$ slower at $n_q\!=\!12$ than $n_q\!=\!6$
+    \end{itemize}
+    \medskip
+
+    The $n_q\!=\!12$ degradation is consistent with the
+    \emph{barren plateau} phenomenon~\cite{McClean2018BarrenPlateaus}.
+\end{frame}

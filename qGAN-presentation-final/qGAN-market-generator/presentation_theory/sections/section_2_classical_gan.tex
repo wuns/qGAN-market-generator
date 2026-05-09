@@ -1,0 +1,84 @@
+% !TEX root = ../main.tex
+
+\section{Background: GANs}
+\label{sec:gans}
+\frame[plain]{\sectionpage}
+
+%----------------------------------------
+\begin{frame}{Generative Adversarial Networks}
+    \begin{columns}[T]
+    \begin{column}{.50\textwidth}
+        Two networks playing a minimax game:
+        \begin{itemize}
+            \item \textbf{Generator} $G_\theta$ maps noise
+            $\mathbf{z}\sim\mathcal{N}(0,I)$ to a sample
+            \item \textbf{Discriminator} $D_\phi$ outputs
+            \emph{real} or \emph{fake} probability
+            \item Trained alternately; $G$ learns to fool $D$
+        \end{itemize}
+        \medskip
+
+        Vanilla GAN losses:
+        \[
+        \mathcal{L}_G = -\mathbb{E}_{z}[\log D(G(z))]
+        \]
+        \[
+        \mathcal{L}_D = -\mathbb{E}_x[\log D(x)]
+        - \mathbb{E}_z[\log(1 - D(G(z)))]
+        \]
+        Trained alternately via gradient descent on both.
+    \end{column}
+    \hfill
+    \begin{column}{.45\textwidth}
+        \begin{center}
+        \begin{tikzpicture}[node distance=4mm,
+            box/.style={draw=zhawaccent,thick,rounded corners,
+                        minimum width=18mm,minimum height=7mm,
+                        fill=zhawaccent!10,font=\small},
+            data/.style={font=\small\itshape},
+            arrow/.style={-Latex,thick}]
+        \node[data] (z) {$\mathbf{z}\sim\mathcal{N}$};
+        \node[box,below=of z] (G) {Generator};
+        \node[data,below=of G] (fake) {fake $\hat{x}$};
+        \node[data,right=18mm of z] (xreal)
+            {$\mathbf{x}\sim p_{\text{real}}$};
+        \node[box,below=18mm of xreal] (D) {Discriminator};
+        \node[data,below=of D] (out) {real / fake};
+        \draw[arrow] (z) -- (G);
+        \draw[arrow] (G) -- (fake);
+        \draw[arrow] (fake) to[bend right=25] (D);
+        \draw[arrow] (xreal) -- (D);
+        \draw[arrow] (D) -- (out);
+        \end{tikzpicture}
+        \end{center}
+    \end{column}
+    \end{columns}
+\end{frame}
+
+%----------------------------------------
+\begin{frame}{How a classical generator produces correlated samples}
+    Latent $\mathbf{z}\sim\mathcal{N}(0,I_{d_z})$ has independent
+    components. The generator stacks affine maps and
+    non-linearities:
+    \[
+    G(\mathbf{z}) = \tanh\bigl(W_3\,\sigma(W_2\,
+    \sigma(W_1\mathbf{z}+\mathbf{b}_1)+\mathbf{b}_2)
+    +\mathbf{b}_3\bigr), \quad \sigma = \text{LeakyReLU}
+    \]
+    \medskip
+
+    All output correlations come from \emph{deterministic
+    mixing of independent noise} via the learned weights:
+    \[
+    \mathrm{Cov}(y_i, y_j) \approx (W W^\top)_{ij},
+    \quad W = W_3 W_2 W_1
+    \]
+    \medskip
+
+    \begin{block}{Mechanism in one phrase}
+        Output dependence is built entirely from
+        \emph{deterministic mixing of independent noise}.
+        Capacity to model complex joint structure scales with
+        parameter count.
+    \end{block}
+\end{frame}

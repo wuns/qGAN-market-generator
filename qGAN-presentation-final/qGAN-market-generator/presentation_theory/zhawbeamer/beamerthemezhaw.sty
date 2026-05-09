@@ -1,0 +1,45 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEAMER
+% main theme
+% 
+% Authors:
+% Martin Oswald
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\NeedsTeXFormat{LaTeX2e}
+\mode<presentation>
+
+%----------------------------------------
+%   INTERNAL SETTINGS
+%----------------------------------------
+\gdef\@lrmargin{8mm}
+\gdef\@ftitleheight{16mm}
+\gdef\@ftitlemargin{2mm}
+\gdef\@footermargin{2mm}
+
+
+%----------------------------------------
+%   REQUIREMENTS
+%----------------------------------------
+\RequirePackage{calc}
+\RequirePackage{tikz}
+\usetikzlibrary{backgrounds}
+
+%----------------------------------------
+%   COMMANDS
+%----------------------------------------
+\providecommand{\smalltitle}[1]{\gdef\@smalltitle{#1}}
+\providecommand{\lfooter}[1]{\gdef\@lfooter{#1}}
+\providecommand{\mfooter}[1]{\gdef\@mfooter{#1}}
+
+
+%----------------------------------------
+%   SETTINGS
+%----------------------------------------
+\useinnertheme{zhaw}
+\useoutertheme{zhaw}
+\usecolortheme{zhaw}
+
+\setbeamersize{text margin left=\@lrmargin,text margin right=\@lrmargin}
+
+%----------------------------------------
+\mode<all>

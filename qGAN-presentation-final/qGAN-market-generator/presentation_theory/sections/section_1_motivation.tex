@@ -1,0 +1,85 @@
+% !TEX root = ../main.tex
+
+\section{Motivation}
+\label{sec:motivation}
+\frame[plain]{\sectionpage}
+
+%----------------------------------------
+\begin{frame}{Synthetic financial time series: a hard problem}
+    \begin{columns}[T]
+    \begin{column}{.55\textwidth}
+        \textbf{Why generate synthetic returns?}
+        \begin{itemize}
+            \item Stress-testing portfolio strategies
+            \item Backtesting under counterfactual regimes
+            \item Risk modelling: VaR, Expected Shortfall
+            \item ML training-data augmentation
+        \end{itemize}
+        \medskip
+
+        \textbf{Why is it hard?}
+        \begin{itemize}
+            \item Returns are non-stationary, fat-tailed,
+            volatility-clustered
+            \item Cross-asset dependencies are non-Gaussian
+            \item Historical data is scarce relative to the
+            joint distribution's dimensionality
+        \end{itemize}
+    \end{column}
+    \hfill
+    \begin{column}{.40\textwidth}
+        \begin{block}{Stylised facts}
+            \begin{itemize}
+                \item $\sim 0$ ACF in returns
+                \item Strong positive ACF in $|r_t|$ and $r_t^2$
+                (volatility clustering)
+                \item Excess kurtosis: heavy tails
+                \item Slight negative skew
+                \item Asymmetric tail dependence
+            \end{itemize}
+        \end{block}
+    \end{column}
+    \end{columns}
+\end{frame}
+
+%----------------------------------------
+\begin{frame}{The quantum hypothesis}
+    \begin{columns}[T]
+    \begin{column}{.55\textwidth}
+        \textbf{Theoretical motivation}\\
+        An $n$-qubit circuit parametrises a unitary operator on a
+        $\mathbf{2^n}$-dimensional Hilbert space using only
+        $\mathcal{O}(\text{poly}(n))$ gates and parameters.
+        \medskip
+
+        Through \emph{entanglement}, the joint distribution of
+        measurement outcomes can encode dependence structure that
+        no product of independent classical operations can
+        reproduce~\cite{Zoufal2019QGAN, Coyle2021QvsClassical}.
+        \medskip
+
+        \textbf{Research question}\\
+        On a controlled multi-asset benchmark, does replacing the
+        generator of a GAN with a small variational quantum
+        circuit produce measurably different output statistics
+        --- and at what parameter cost?
+    \end{column}
+    \hfill
+    \begin{column}{.40\textwidth}
+        \begin{block}{Project scope}
+            \begin{itemize}
+                \item Univariate \& multivariate ($\leq 5$
+                assets)
+                \item Vanilla GAN training~\cite{Goodfellow2014GAN}
+                \item Daily log-returns, 20-day windows
+                \item \smi, \dax, EuroStoxx, FTSE, \sap
+                \item Simulator: PennyLane
+                \cite{Bergholm2018PennyLane}
+            \end{itemize}
+        \end{block}
+        \medskip
+
+        Out of scope: real hardware, $> 5$ assets.
+    \end{column}
+    \end{columns}
+\end{frame}

@@ -1,0 +1,110 @@
+% !TEX root = ../main.tex
+
+\section{Entanglement and Joint Distributions}
+\label{sec:entanglement}
+\frame[plain]{\sectionpage}
+
+%----------------------------------------
+\begin{frame}{What entanglement provides}
+    \textbf{Without entanglement} (single-qubit gates only): the
+    state stays a product
+    $|\psi\rangle = |\psi_1\rangle\otimes\cdots\otimes
+    |\psi_{n_q}\rangle$ and measurements are
+    \emph{statistically independent}:
+    \[
+    P(\mu_1,\ldots,\mu_{n_q}) = \prod_i P(\mu_i)
+    \]
+    \medskip
+
+    \textbf{With CNOTs}: state is no longer separable. Joint
+    structure that no product distribution can reproduce.
+    \medskip
+
+    \begin{block}{Bell state example}
+        Two qubits, Hadamard on qubit 1, then CNOT:
+        \[
+        |0\rangle\otimes|0\rangle \;\longrightarrow\;
+        \tfrac{1}{\sqrt 2}(|00\rangle+|11\rangle)
+        \]
+        Marginals: $\langle Z_1\rangle = \langle Z_2\rangle = 0$
+        (uniform random).
+        Joint: $\langle Z_1 Z_2\rangle = +1$ (perfectly
+        correlated). No product of independent random variables
+        can produce this.
+    \end{block}
+\end{frame}
+
+%----------------------------------------
+\begin{frame}{Two routes to correlated samples}
+    \begin{columns}[T]
+    \begin{column}{.48\textwidth}
+        \textbf{Classical generator}\\
+        Independent noise $\mathbf{z}$\\
+        $\downarrow$ deterministic mixing\\
+        $\downarrow$ via learned $W_1, W_2, W_3$\\
+        $\downarrow$\\
+        Correlated outputs
+        \medskip
+
+        All correlation must be encoded in the weight
+        matrices.
+    \end{column}
+    \hfill
+    \begin{column}{.48\textwidth}
+        \textbf{Hybrid quantum generator}\\
+        Independent noise $\mathbf{z}$\\
+        $\downarrow$ entangled circuit\\
+        $\downarrow$ produces correlated $(\mu_1,\ldots,\mu_{n_q})$\\
+        $\downarrow$\\
+        Classical head upsamples
+        \medskip
+
+        Quantum part introduces dependence between features
+        \emph{before} the head sees them.
+    \end{column}
+    \end{columns}
+    \medskip
+
+    \begin{center}
+    \emph{Hypothesis: this should make the hybrid generator
+    \textbf{more parameter-efficient} for joint distributions ---
+    a claim our project tests empirically.}
+    \end{center}
+\end{frame}
+
+%----------------------------------------
+\begin{frame}{What this is, and is not, a claim of}
+    \begin{columns}[T]
+    \begin{column}{.48\textwidth}
+        \textbf{We claim, theoretically:}
+        \begin{itemize}
+            \item Entanglement provides an architectural
+            \emph{pathway} for joint structure that
+            classical mixing does not have natively
+            \item The set of joint distributions reachable
+            by depth-$L$ quantum circuits differs from the
+            set reachable by classical NNs of comparable
+            parameter count
+        \end{itemize}
+    \end{column}
+    \hfill
+    \begin{column}{.48\textwidth}
+        \textbf{We do not claim:}
+        \begin{itemize}
+            \item That classical NNs cannot represent
+            these distributions (they can, given enough
+            capacity)
+            \item That parameter-efficiency manifests in
+            every regime
+            \item That entanglement is the \emph{only}
+            possible explanation for any observed effect
+        \end{itemize}
+    \end{column}
+    \end{columns}
+    \medskip
+
+    \begin{center}
+    \emph{The honest framing: a hypothesis we test, not a theorem
+    we prove.}
+    \end{center}
+\end{frame}

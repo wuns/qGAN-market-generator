@@ -1,0 +1,100 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEAMER
+% outer theme
+% 
+% Authors:
+% Martin Oswald
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mode<presentation>
+
+%----------------------------------------
+%   TITLE PAGE
+%----------------------------------------
+\setbeamertemplate{title page}{
+    \nointerlineskip
+    \begin{beamercolorbox}[wd=\paperwidth,ht=\paperheight,leftskip=\@lrmargin,rightskip=\@lrmargin]{title page}
+        {\usebeamerfont{title}\inserttitle\par}
+        \rule{\textwidth}{0.7mm}
+        \usebeamerfont{subtitle}\insertsubtitle\par
+
+        \vskip 3em
+        
+        \usebeamerfont{author}\insertauthor\par
+        \usebeamerfont{date}\insertdate\par
+        \vskip \@lrmargin
+        
+    \end{beamercolorbox}
+    
+    \begin{tikzpicture}[remember picture,overlay,every node/.style={inner sep=0,outer sep=\@lrmargin}]
+        \node[anchor=north east] at (current page.north east){
+                \includegraphics[width=30mm, height=30mm]{zhawbeamer/zhaw_logo_white.png}
+        };
+    \end{tikzpicture}
+}
+
+%----------------------------------------
+%   SECTION PAGE
+%----------------------------------------
+\setbeamertemplate{section page}{
+    \nointerlineskip
+    \begin{beamercolorbox}[wd=\paperwidth,ht=\paperheight,leftskip=\@lrmargin,rightskip=\@lrmargin]{section page}
+        {\usebeamerfont{section}\insertsection\par}
+        \rule{\textwidth}{0.7mm}
+        \vskip 5em
+    \end{beamercolorbox}
+
+    \begin{tikzpicture}[remember picture,overlay,every node/.style={inner sep=\@ftitlemargin,outer sep=0}]
+        \node[anchor=north east] at (current page.north east){
+                \includegraphics[width=\@ftitleheight-\@ftitlemargin-\@ftitlemargin, height=\@ftitleheight-\@ftitlemargin-\@ftitlemargin]{zhawbeamer/zhaw_logo_blue.png}
+        };
+    \end{tikzpicture}
+}
+
+%----------------------------------------
+%   HEADLINE
+%----------------------------------------
+\setbeamertemplate{headline}{}
+
+%----------------------------------------
+%   NAV SYMBOLS
+%----------------------------------------
+\setbeamertemplate{navigation symbols}{}
+
+%----------------------------------------
+%   FRAMETITLE
+%----------------------------------------
+\setbeamertemplate{frametitle}{
+    \nointerlineskip
+    \begin{beamercolorbox}[wd=\paperwidth, rightskip=\@ftitleheight, leftskip=\@ftitlemargin, ht=\@ftitleheight]{frametitle}
+        \vbox to \@ftitleheight{
+        \vfill
+        \usebeamerfont{frametitle}\insertframetitle\par
+        \vfill
+        }
+    \end{beamercolorbox}
+    
+    \begin{tikzpicture}[remember picture,overlay,every node/.style={inner sep=\@ftitlemargin,outer sep=0}]
+        \node[anchor=north east] at (current page.north east){
+                \includegraphics[width=\@ftitleheight-\@ftitlemargin-\@ftitlemargin, height=\@ftitleheight-\@ftitlemargin-\@ftitlemargin]{zhawbeamer/zhaw_logo_white.png}
+        };
+    \end{tikzpicture}
+}
+
+%----------------------------------------
+%   FOOTLINE
+%----------------------------------------
+\setbeamertemplate{footline}{
+    \leavevmode
+    \begin{beamercolorbox}[wd=.333\paperwidth,ht=2.25ex,dp=\@footermargin,left,leftskip=\@footermargin]{lfooter}
+        \@lfooter
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[wd=.333\paperwidth,ht=2.25ex,dp=\@footermargin,center]{mfooter}
+        \@mfooter
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[wd=.333\paperwidth,ht=2.25ex,dp=\@footermargin,right,rightskip=\@footermargin]{rfooter}
+        \insertframenumber{}
+    \end{beamercolorbox}
+}
+
+%----------------------------------------
+\mode<all>

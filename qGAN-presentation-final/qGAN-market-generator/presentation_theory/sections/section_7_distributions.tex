@@ -1,0 +1,29 @@
+% !TEX root = ../main.tex
+
+%----------------------------------------
+\begin{frame}{Marginal distributions: shape and tails}
+    \begin{columns}[T]
+    \begin{column}{.45\textwidth}
+        Per-asset histograms of log-returns
+        (real vs.\ classical vs.\ $q=6, 10$):
+        \medskip
+
+        \textbf{Quantum tracks the real bulk closely}; peaks
+        slightly too tall (under-dispersed).
+        \medskip
+
+        \textbf{Classical} learns a much wider distribution
+        and overshoots the tails --- explains the
+        $0.515$ standard error vs.\ $0.246$ for quantum.
+        \medskip
+
+        \emph{Same qualitative pattern across all 5 assets.}
+    \end{column}
+    \hfill
+    \begin{column}{.50\textwidth}
+        \begin{center}
+        \includegraphics[height=0.85\textheight]{distributions_classical_vs_quantum}
+        \end{center}
+    \end{column}
+    \end{columns}
+\end{frame}

@@ -1,0 +1,22 @@
+% !TEX root = ../main.tex
+
+\section{Results}
+\label{sec:results}
+\frame[plain]{\sectionpage}
+
+%----------------------------------------
+\begin{frame}{Headline comparison: classical vs hybrid quantum}
+    Multivariate vanilla GAN, 5 assets
+    (\smi, \dax, EuroStoxx, FTSE, \sap), best quantum at $n_q=10$:
+    \medskip
+
+    \begin{center}
+    \includegraphics[width=0.85\textwidth]{comparison_classical_vs_quantum}
+    \end{center}
+    \medskip
+
+    \textbf{Quantum wins on all four metrics}, with parameter
+    count comparable: 4644 (classical) vs 1130 ($n_q=10$).
+    Largest effect on cross-asset correlation
+    (Frobenius $1.79 \to 0.50$, $\sim\!3.6\!\times$ improvement).
+\end{frame}

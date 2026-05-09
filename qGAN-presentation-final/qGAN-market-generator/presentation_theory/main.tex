@@ -1,0 +1,74 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% qGAN Market Generator --- final presentation
+% ZHAW CEC Quantum Computing, Spring 2026
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[
+10pt,
+xcolor=x11names,
+aspectratio=169,
+]{beamer}
+
+\input{preamble}
+
+% extra packages for math and tikz diagrams
+\usepackage{amsmath, amssymb}
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta, shapes.geometric, fit, backgrounds}
+\usepackage{xcolor}
+
+\definecolor{zhawaccent}{RGB}{0,100,170}
+
+% small helper macros
+\newcommand{\smi}{\mbox{SMI}}
+\newcommand{\dax}{\mbox{DAX}}
+\newcommand{\sap}{\mbox{S\&P\,500}}
+\newcommand{\nikkei}{\mbox{Nikkei\,225}}
+\newcommand{\qgan}{\mbox{qGAN}}
+
+%----------------------------------------
+%   PRESENTATION INFORMATION
+%----------------------------------------
+\title{Hybrid Quantum GANs for Synthetic Financial Time Series}
+\subtitle{A controlled comparison on multivariate index returns}
+\author{[Your name]}
+\date{13 May 2026}
+
+\lfooter{ZHAW CEC Quantum Computing}
+\mfooter{Final project presentation}
+
+%----------------------------------------
+\begin{document}
+
+\frame[plain]{\titlepage}
+
+\begin{frame}{Outline}
+\tableofcontents
+\end{frame}
+
+%----------------------------------------
+%   THEORETICAL CONTENT
+%----------------------------------------
+\input{sections/section_1_motivation}
+\input{sections/section_2_classical_gan}
+\input{sections/section_3_quantum_generator}
+\input{sections/section_4_entanglement}
+\input{sections/section_5_evaluation}
+
+%----------------------------------------
+%   RESULTS
+%----------------------------------------
+\input{sections/section_6_results}
+\input{sections/section_7_distributions}
+\input{sections/section_8_correlation}
+\input{sections/section_9_scaling}
+\input{sections/section_10_discussion}
+
+%----------------------------------------
+%   BIBLIOGRAPHY
+%----------------------------------------
+\begin{frame}[allowframebreaks]{References}
+\printbibliography
+\end{frame}
+
+\end{document}

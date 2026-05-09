@@ -1,0 +1,84 @@
+% !TEX root = ../main.tex
+
+\section{The Quantum Generator}
+\label{sec:quantum}
+\frame[plain]{\sectionpage}
+
+%----------------------------------------
+\begin{frame}{From noise to market scenario: hybrid pipeline}
+    \begin{center}
+    \begin{tikzpicture}[node distance=6mm,
+        box/.style={draw=zhawaccent,thick,rounded corners,
+                    minimum width=20mm,minimum height=9mm,
+                    fill=zhawaccent!10,align=center,font=\small},
+        data/.style={font=\small\itshape},
+        arrow/.style={-Latex,thick}]
+    \node[data] (z) {$\mathbf{z}\sim\mathcal{N}(0,I_{n_q})$};
+    \node[box,right=of z] (Q) {Quantum\\circuit $Q_\theta$};
+    \node[data,right=of Q] (mu) {$\mu_i = \langle Z_i\rangle$};
+    \node[box,right=of mu] (h) {Linear+\\$\tanh$};
+    \node[data,right=of h] (out)
+        {$W\!\times\!n_a$ scenario};
+    \draw[arrow] (z) -- (Q);
+    \draw[arrow] (Q) -- (mu);
+    \draw[arrow] (mu) -- (h);
+    \draw[arrow] (h) -- (out);
+    \end{tikzpicture}
+    \end{center}
+    \medskip
+
+    \textbf{Two-stage architecture}
+    \begin{itemize}
+        \item \textbf{Quantum part} $Q_\theta:
+        \mathbb{R}^{n_q}\to[-1,1]^{n_q}$ produces $n_q$
+        expectation values via an entangled circuit
+        \item \textbf{Classical head} upsamples to full output
+        dimension via a single \texttt{Linear}~+~$\tanh$
+    \end{itemize}
+    \medskip
+
+    \emph{Discriminator unchanged from the classical baseline.
+    Only the generator differs --- a controlled comparison.}
+\end{frame}
+
+%----------------------------------------
+\begin{frame}{The variational quantum circuit}
+    \begin{columns}[T]
+    \begin{column}{.55\textwidth}
+        Operations on $\mathcal{H} = \mathbb{C}^{2^{n_q}}$:
+        \medskip
+
+        \begin{enumerate}
+            \item \textbf{Initial state} $|\mathbf{0}\rangle$
+            \item \textbf{AngleEmbedding}: apply $RY(z_i)$ on
+            each qubit (encodes input as rotations)
+            \item \textbf{Variational layer (×$L$)}:
+            trainable $RY(\theta_{\ell,i})$ on each qubit, then
+            a ring of CNOTs
+            \item \textbf{Measure} $\mu_i = \langle Z_i\rangle
+            \in [-1,1]$ on each qubit
+        \end{enumerate}
+        \medskip
+
+        Total trainable angles: $n_q \times L$.\\
+        For $n_q=8, L=3$: \textbf{24 quantum parameters} on a
+        256-dim complex state space.
+    \end{column}
+    \hfill
+    \begin{column}{.43\textwidth}
+        \begin{block}{Why this design?}
+            \begin{itemize}
+                \item Hardware-efficient: nearest-neighbour
+                CNOTs only
+                \item $RY$-only rotations mitigate barren
+                plateaus relative to richer
+                ansätze~\cite{McClean2018BarrenPlateaus}
+                \item Local Pauli-Z measurements bound
+                gradient variance~\cite{Cerezo2021LocalCost}
+                \item $L=3$: enough depth for entanglement to
+                spread; deeper risks barren plateaus
+            \end{itemize}
+        \end{block}
+    \end{column}
+    \end{columns}
+\end{frame}
