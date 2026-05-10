@@ -12,8 +12,8 @@
 
     \textbf{1.\ Marginal statistics} (per asset)
     \begin{itemize}
-        \item Mean, std, skewness, excess kurtosis
-        \item Two-sample Kolmogorov-Smirnov distance
+        \item Mean, standard deviation (std), skewness, excess kurtosis
+        \item Two-sample Kolmogorov-Smirnov distance (measures distance of marginal distributions)
     \end{itemize}
     \medskip
 
@@ -38,7 +38,7 @@
     \begin{column}{.48\textwidth}
         \textbf{Data}
         \begin{itemize}
-            \item Daily closes 2005--2024 (Yahoo Finance)
+            \item Daily closing prices 2005--2024 from Yahoo Finance
             \item Log-returns, scaled to $\sim[-1,1]$ per asset
             \item Windows of 20 trading days (rolling, stride 1)
             \item Chronological 80/20 train/test split
@@ -56,19 +56,16 @@
     \end{column}
     \hfill
     \begin{column}{.48\textwidth}
-        \textbf{Controlled comparison}\\
-        Identical across all runs:
+        \textbf{The same:}
         \begin{itemize}
             \item Discriminator architecture
-            \item Loss function, optimiser, hyperparameters
+            \item Loss function, optimizer, hyperparameters
             \item Seed, evaluation pipeline, data
         \end{itemize}
         \medskip
 
-        Only the generator differs; any observed difference is
-        attributable to the generator architecture --- and within
-        the quantum case, to the entanglement that creates joint
-        feature structure before the classical head.
+        Only the generator differs; any observed difference is attributable to the generator architecture. \\
+        Within the quantum case, the observed difference is due to the entanglement that creates joint feature structure before the classical head.
     \end{column}
     \end{columns}
 \end{frame}

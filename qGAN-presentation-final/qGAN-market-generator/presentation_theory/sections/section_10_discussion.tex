@@ -14,9 +14,9 @@
             on all four metrics (KS, std, kurtosis,
             cross-correlation)
             \item Largest effect on \emph{joint dependence}
-            ($\sim\!3.6\!\times$ lower Frobenius error)
+            %($\sim\!3.6\!\times$ lower Frobenius error)
             \item Quality improves with $n_q$ up to a clear
-            optimum ($n_q\!=\!10$ in our setup)
+            optimum %($n_q\!=\!10$ in our setup)
         \end{itemize}
     \end{column}
     \hfill
@@ -26,9 +26,9 @@
             \item No monotone improvement past $n_q\!=\!10$:
             $n_q\!=\!12$ degrades, consistent with barren
             plateaus
-            \item Tail behaviour not fully recovered:
-            fake kurtosis $\sim\!1.5$ vs.\ real $\sim\!3.1$,
-            limited by the $\tanh$ output bottleneck
+            \item Tail behavior not fully recovered:
+            fake kurtosis $\sim\!1.5$ vs.\ real $\sim\!3.1$%,
+            % limited by the $\tanh$ output bottleneck
             \item Quantum simulation cost
             ($\sim\!10\text{--}100\!\times$ slower than
             classical) makes routine deployment impractical
@@ -37,10 +37,10 @@
     \end{columns}
     \medskip
 
-    \textbf{Honest framing.} The observed advantage is consistent
-    with the entanglement-as-joint-structure hypothesis, but
-    not isolated from it: a fully matched-parameter classical
-    baseline with no entanglement remains a natural follow-up.
+    % \textbf{Honest framing.} The observed advantage is consistent
+    % with the entanglement-as-joint-structure hypothesis, but
+    % not isolated from it: a fully matched-parameter classical
+    % baseline with no entanglement remains a natural follow-up.
 \end{frame}
 
 %----------------------------------------
@@ -55,20 +55,20 @@
         the quantum advantage is largest where joint structure
         matters most (correlation, not marginal tails).
 
-        \item Naive intuitions about scaling fail:
-        more qubits do not monotonically improve performance ---
-        a known optimisation barrier (barren plateaus) bounds
+        \item Naive intuition about scaling fails:
+        more qubits do not necessarily improve performance --
+        an optimization barrier (barren plateaus) bounds
         the usable regime.
 
-        \item Practical deployment requires the tools from
-        Lecture~6: \emph{local costs, problem-informed ans\"atze,
-        warm initialisation} --- precisely what the next
-        iteration of this project would need.
+        % \item Practical deployment requires the tools from
+        % Lecture~6: \emph{local costs, problem-informed ans\"atze,
+        % warm initialisation} --- precisely what the next
+        % iteration of this project would need.
     \end{itemize}
     \medskip
 
     \begin{center}
     \emph{Code, data, and figures:}\\
-    \texttt{github.com/wuns/qGAN-market-generator}
+    \url{github.com/wuns/qGAN-market-generator}{github.com/wuns/qGAN-market-generator}
     \end{center}
 \end{frame}

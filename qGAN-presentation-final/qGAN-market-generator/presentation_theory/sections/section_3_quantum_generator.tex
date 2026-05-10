@@ -37,8 +37,12 @@
     \end{itemize}
     \medskip
 
-    \emph{Discriminator unchanged from the classical baseline.
-    Only the generator differs --- a controlled comparison.}
+    \begin{itemize}
+        \item[$\rightarrow$] Discriminator unchanged from the classical baseline
+        \item[$\rightarrow$] Only the generator differs
+    \end{itemize}
+    % \emph{Discriminator unchanged from the classical baseline.
+    % Only the generator differs -- a controlled comparison.}
 \end{frame}
 
 %----------------------------------------
@@ -48,7 +52,7 @@
         Operations on $\mathcal{H} = \mathbb{C}^{2^{n_q}}$:
         \medskip
 
-        \begin{enumerate}
+        \begin{itemize}
             \item \textbf{Initial state} $|\mathbf{0}\rangle$
             \item \textbf{AngleEmbedding}: apply $RY(z_i)$ on
             each qubit (encodes input as rotations)
@@ -57,7 +61,7 @@
             a ring of CNOTs
             \item \textbf{Measure} $\mu_i = \langle Z_i\rangle
             \in [-1,1]$ on each qubit
-        \end{enumerate}
+        \end{itemize}
         \medskip
 
         Total trainable angles: $n_q \times L$.\\
@@ -68,7 +72,7 @@
     \begin{column}{.43\textwidth}
         \begin{block}{Why this design?}
             \begin{itemize}
-                \item Hardware-efficient: nearest-neighbour
+                \item HEA: nearest-neighbour
                 CNOTs only
                 \item $RY$-only rotations mitigate barren
                 plateaus relative to richer

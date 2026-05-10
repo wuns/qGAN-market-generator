@@ -28,11 +28,10 @@
     \end{column}
     \hfill
     \begin{column}{.40\textwidth}
-        \begin{block}{Stylised facts}
+        \begin{block}{Stylized facts}
             \begin{itemize}
-                \item $\sim 0$ ACF in returns
-                \item Strong positive ACF in $|r_t|$ and $r_t^2$
-                (volatility clustering)
+                \item Daily returns are (almost) uncorrelated
+                \item But: volatility clustering (strong positive ACF in $|r_t|$ and $r_t^2$)
                 \item Excess kurtosis: heavy tails
                 \item Slight negative skew
                 \item Asymmetric tail dependence
@@ -62,7 +61,7 @@
         On a controlled multi-asset benchmark, does replacing the
         generator of a GAN with a small variational quantum
         circuit produce measurably different output statistics
-        --- and at what parameter cost?
+        -- and at what parameter cost?
     \end{column}
     \hfill
     \begin{column}{.40\textwidth}
@@ -71,7 +70,7 @@
                 \item Univariate \& multivariate ($\leq 5$
                 assets)
                 \item Vanilla GAN training~\cite{Goodfellow2014GAN}
-                \item Daily log-returns, 20-day windows
+                \item Daily log-returns, 20-day rolling time windows
                 \item \smi, \dax, EuroStoxx, FTSE, \sap
                 \item Simulator: PennyLane
                 \cite{Bergholm2018PennyLane}
