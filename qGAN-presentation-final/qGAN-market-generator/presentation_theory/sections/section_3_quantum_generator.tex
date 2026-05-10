@@ -53,7 +53,7 @@
         \medskip
 
         \begin{itemize}
-            \item \textbf{Initial state} $|\mathbf{0}\rangle$
+            \item \textbf{Initial state} $|\mathbf{0}\rangle = |0\rangle^{\otimes n_q}$
             \item \textbf{AngleEmbedding}: apply $RY(z_i)$ on
             each qubit (encodes input as rotations)
             \item \textbf{Variational layer (×$L$)}:
@@ -72,15 +72,12 @@
     \begin{column}{.43\textwidth}
         \begin{block}{Why this design?}
             \begin{itemize}
-                \item HEA: nearest-neighbour
+                \item HEA: nearest-neighbor
                 CNOTs only
                 \item $RY$-only rotations mitigate barren
-                plateaus relative to richer
-                ansätze~\cite{McClean2018BarrenPlateaus}
-                \item Local Pauli-Z measurements bound
-                gradient variance~\cite{Cerezo2021LocalCost}
-                \item $L=3$: enough depth for entanglement to
-                spread; deeper risks barren plateaus
+                plateaus relative to richer ansätze~\cite{McClean2018BarrenPlateaus}
+                \item Local Pauli-Z measurements bound gradient variance~\cite{Cerezo2021LocalCost}
+                \item $L=3$: enough depth for entanglement to spread; deeper risks barren plateaus
             \end{itemize}
         \end{block}
     \end{column}
