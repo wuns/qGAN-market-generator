@@ -30,13 +30,51 @@ qGAN-market-generator/
 ├── .gitignore
 ├── src/
 │   ├── __init__.py
-│   ├── data.py           # SMI download, log-returns, windowing, scaling
-│   ├── models.py         # classical Generator and Discriminator
-│   ├── training.py       # shared training loop
-│   └── evaluation.py     # metrics, plots, summary tables
+│   ├── data.py                       # Yahoo download, log-returns, scaling, windowing
+│   ├── models.py                     # ClassicalGenerator, Discriminator
+│   ├── quantum_models.py             # QuantumGenerator (PennyLane TorchLayer)
+│   ├── training.py                   # train_gan, build_experiment dispatcher
+│   ├── evaluation.py                 # KS, Frobenius, kurtosis, ACF, plots
+│   └── experiment.py                 # ExperimentConfig + run_experiment + run_many
 ├── notebooks/
-│   └── 01_classical_baseline.ipynb
-└── results/              # .npy, .json, .pt artefacts (gitignored if large)
+│   ├── 01_classical_baseline.ipynb
+│   ├── 02_quantum_gan.ipynb
+│   └── 03_comparison.ipynb           # orchestrator: runs all configs, builds plots
+├── results/                          # PNGs, CSVs, metrics.json (npy/pt gitignored)
+│   ├── summary.csv
+│   ├── Comparison_GAN_qGAN.png
+│   ├── correlation_gan_<assets>.png
+│   ├── distributions_gan_<assets>.png
+│   ├── qubit_scaling.png
+│   └── <run_folder>/metrics.json
+└── presentation_theory/              # Beamer deck for May 13 talk
+    ├── main.tex                      # title, TOC, section inputs, refs
+    ├── preamble.tex                  # packages, theme, density settings, hyperref
+    ├── sources.bib                   # IEEE-style references
+    ├── README.md
+    ├── figures/
+    │   ├── comparison_classical_vs_quantum.png
+    │   ├── correlation_classical_vs_quantum.png
+    │   ├── distributions_classical_vs_quantum.png
+    │   └── qubit_scaling.png
+    ├── sections/
+    │   ├── section_1_motivation.tex          # why qGAN, project scope
+    │   ├── section_2_classical_gan.tex       # GAN basics, classical correlations
+    │   ├── section_3_quantum_generator.tex   # hybrid pipeline, circuit details
+    │   ├── section_4_entanglement.tex        # Bell example, two routes
+    │   ├── section_5_evaluation.tex          # metrics, experimental design
+    │   ├── section_6_results.tex             # headline comparison
+    │   ├── section_7_distributions.tex       # marginal histograms
+    │   ├── section_8_correlation.tex         # cross-asset heatmaps
+    │   ├── section_9_scaling.tex             # qubit scaling + barren plateau
+    │   └── section_10_discussion.tex         # what we found, take-aways
+    └── zhawbeamer/                   # ZHAW theme files (untouched)
+        ├── beamercolorthemezhaw.sty
+        ├── beamerinnerthemezhaw.sty
+        ├── beamerouterthemezhaw.sty
+        ├── beamerthemezhaw.sty
+        ├── zhaw_logo_blue.png
+        └── zhaw_logo_white.png
 ```
 
 ## Reproducibility
@@ -53,13 +91,6 @@ ACF of returns and squared returns (volatility clustering).
 **Computational:** parameter count, training time, inference throughput.
 
 **Uncertainty:** each experiment is run with multiple seeds; mean ± std reported.
-
-## Running locally
-
-```bash
-pip install -r requirements.txt
-jupyter lab
-```
 
 ## Running on Google Colab
 
